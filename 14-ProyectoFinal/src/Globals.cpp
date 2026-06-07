@@ -217,7 +217,7 @@ GLuint textureVictoriaID = 0;
 
 FontTypeRendering::FontTypeRendering* textoPantalla = nullptr;
 
-float tiempoInicial = 20.0f;
+float tiempoInicial = 1200.0f;
 float tiempoRestante = tiempoInicial;
 bool contadorActivo = true;
 

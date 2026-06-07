@@ -57,7 +57,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     target_link_libraries(
         ProyectoFinal
         opengl32.lib
-        libglfw3dll.dll.a
+        libglfw3dll.a
         libglew32.dll.a
         libassimp.dll.a
         libfreetype.dll.a

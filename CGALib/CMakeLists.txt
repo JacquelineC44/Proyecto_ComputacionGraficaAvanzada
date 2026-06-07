@@ -1,4 +1,4 @@
-add_definitions(-DBUILDING_DLL) # Define a macro indicating DLL import
+add_definitions(-DBUILDING_DLL)
 
 file(GLOB CGALib_SRC
      "./include/Headers/*.h"
@@ -7,8 +7,8 @@ file(GLOB CGALib_SRC
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
      include_directories(
-          CGALib 
-          "./include/" 
+          CGALib
+          "./include/"
           "../external/assimp/include"
           "../external/glfw/include"
           "../external/glm"
@@ -17,29 +17,45 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
           "../external/OpenAL/include"
           "../external/Freetype/include"
           "../external/freealut/include"
+          "C:/msys64/mingw64/include"
+     )
 
-     )
-     link_directories(
-          "../external/assimp/lib"
-          "../external/glfw/lib"
-          "../external/Freetype/lib"
-          "../external/FreeImage/lib"
-          "../external/glew/lib"
-     )
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
      include_directories(
-          CGALib 
-          "./include/" 
-          "/usr/include/freetype2" 
+          CGALib
+          "./include/"
+          "/usr/include/freetype2"
      )
 endif()
+
 add_library(CGALib SHARED ${CGALib_SRC})
+
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
      set_target_properties(CGALib
           PROPERTIES
-          RUNTIME_OUTPUT_DIRECTORY "../../bin"
+          RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
      )
-     target_link_libraries(CGALib opengl32.lib libglfw3dll.dll.a libglew32.dll.a libassimp.dll.a libfreetype.dll.a)
+
+     target_link_libraries(CGALib
+          opengl32
+          gdi32
+          glu32
+
+          ${CMAKE_SOURCE_DIR}/external/glfw/lib/libglfw3dll.a
+          ${CMAKE_SOURCE_DIR}/external/glew/lib/libglew32.dll.a
+          ${CMAKE_SOURCE_DIR}/external/assimp/lib/libassimp.dll.a
+          ${CMAKE_SOURCE_DIR}/external/Freetype/lib/libfreetype.dll.a
+     )
+
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-     target_link_libraries(CGALib glut glfw GLEW GLU GL freeimage assimp freetype)
+     target_link_libraries(CGALib
+          glut
+          glfw
+          GLEW
+          GLU
+          GL
+          freeimage
+          assimp
+          freetype
+     )
 endif()
